@@ -19,5 +19,11 @@ Route::prefix('admin')->group(function () {
    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
    Route::post('/login', 'Auth\LoginController@login');
    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+
+   Route::get('/', 'HomeController@index')->name('home');
+   Route::prefix('/users')->group(function () {
+        Route::get('/', 'UserController@index')->name('users.index');
+
+    });
 });
-Route::get('/admin', 'HomeController@index')->name('home');
+
