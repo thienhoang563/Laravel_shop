@@ -16,13 +16,17 @@ Route::get('/', function () {
 });
 
 Route::prefix('admin')->group(function () {
-   Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-   Route::post('/login', 'Auth\LoginController@login');
-   Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
+    Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::post('/login', 'Auth\LoginController@login');
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
-   Route::get('/', 'HomeController@index')->name('home');
-   Route::prefix('/users')->group(function () {
+    Route::get('/', 'HomeController@index')->name('home');
+
+    Route::prefix('/users')->group(function () {
         Route::get('/', 'UserController@index')->name('users.index');
+        Route::get('/create', 'UserController@create')->name('users.create');
+        Route::post('/create', 'UserController@store')->name('users.store');
+
 
     });
 });
