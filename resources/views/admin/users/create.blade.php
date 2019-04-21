@@ -2,6 +2,7 @@
 @section('page-content')
 <div class="col-12 col-md-12">
 <h1 class="h3 mb-2 text-gray-800">Create Users</h1>
+    <hr>
     <form method="post" action="{{route('users.store')}}" enctype="multipart/form-data">
         @if ($errors->any())
             <div class="alert alert-danger">
