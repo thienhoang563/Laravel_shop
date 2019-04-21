@@ -3,14 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function index() {
-        $users = User::all();
+        $users = User::orderBy('id', 'DESC')->get();
         return view('admin.users.index',compact('users'));
     }
     public function create() {
@@ -33,6 +37,53 @@ class UserController extends Controller
 
         $user->save();
         Session::flash('success','Created Successful!');
+        return redirect()->route('users.index');
+    }
+    public function destroy($id) {
+        $user = User::findOrFail($id);
+        $idUserLogin = Auth::user()->id;
+        if ($user->id ==1 || $user->id == $idUserLogin){
+            Session::flash('error',"You can't delete this account!");
+            return redirect()->route('users.index');
+        }
+
+        $user->delete();
+        Session::flash('success','Deleted Successful!');
+        return redirect()->route('users.index');
+    }
+
+    public function update($id) {
+        $user = User::findOrFail($id);
+        $idUserLogin = Auth::user()->id;
+        if ($user->id == 1 || $user->id == $idUserLogin) {
+            Session::flash('error', "You can't update profile this account!");
+            return redirect()->route('users.index');
+        }
+
+        return view('admin.users.update', compact('user'));
+    }
+
+    public function edit(UpdateUserRequest $request, $id) {
+        $user = User::findOrFail($id);
+        $idUserLogin = Auth::user()->id;
+        if ($user->id == 1 || $user->id == $idUserLogin){
+            Session::flash('error', "You can't update profile this account!");
+        }
+
+        $user->name = $request->name;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        $user->role = $request->role;
+
+        if ($request->hasFile('image')) {
+            unlink(public_path(). '/storage/' . $user->image);
+            $avatar = $request->image;
+            $path = $avatar->store('avatar', 'public');
+            $user->image = $path;
+        }
+
+        $user->save();
+        Session::flash('success', 'Update Successfull!');
         return redirect()->route('users.index');
     }
 }

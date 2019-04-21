@@ -14,6 +14,9 @@
         @if(\Illuminate\Support\Facades\Session::has('success'))
             <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('success')}}</div>
         @endif
+        @if(\Illuminate\Support\Facades\Session::has('error'))
+            <div class="alert alert-success">{{\Illuminate\Support\Facades\Session::get('error')}}</div>
+        @endif
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -25,6 +28,7 @@
                         <th>Phone</th>
                         <th>Image</th>
                         <th>Role</th>
+                        <th>Action</th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -35,17 +39,19 @@
                         <th>Phone</th>
                         <th>Image</th>
                         <th>Role</th>
+                        <th>Action</th>
+
                     </tr>
                     </tfoot>
                     <tbody>
-                    @foreach($users as $user)
+                    @forelse($users as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->address }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>
-                                <img src="{{asset('storage/ '. $user->img)}}" alt="">
+                                <img src="{{asset('storage/ '. $user->image)}}" alt="" width="50">
                             </td>
                             <td>
                                 @if($user->role == \App\Http\Controllers\RoleConstant::ADMIN)
@@ -54,8 +60,23 @@
                                     {{'Member'}}
                                 @endif
                             </td>
+                            <td>
+                            @if($user->id == '1' || $user->id == \Illuminate\Support\Facades\Auth::user()->id)
+                                <td></td>
+                            @else
+                                <a href="{{route('users.update', $user->id)}}" class="btn btn-primary"><i
+                                            class="far fa-edit"></i></a>
+                                <a href="{{route('users.destroy',$user->id)}}" class="btn btn-danger"
+                                   onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></a>
+                                @endif
+                                </td>
                         </tr>
-                    @endforeach
+
+                    @empty
+                        <tr>
+                            <td>{{'No data!'}}</td>
+                        </tr>
+                    @endforelse
                     </tbody>
                 </table>
             </div>
