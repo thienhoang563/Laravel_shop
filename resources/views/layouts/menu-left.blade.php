@@ -26,7 +26,7 @@
         Interface
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Menu User -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
@@ -38,6 +38,22 @@
                 <h6 class="collapse-header">Users Manager:</h6>
                 <a class="collapse-item" href="{{route('users.index')}}">List Users</a>
                 <a class="collapse-item" href="{{route('users.create')}}">Create User</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Menu Categories -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory"
+           aria-expanded="true" aria-controls="collapseCategory">
+            <i class="fas fa-fw fa-th-list"></i>
+            <span>Categories</span>
+        </a>
+        <div id="collapseCategory" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Categories Manager:</h6>
+                <a class="collapse-item" href="{{route('categories.index')}}">List Category</a>
+                <a class="collapse-item" href="{{route('categories.create')}}">Create Category</a>
             </div>
         </div>
     </li>
