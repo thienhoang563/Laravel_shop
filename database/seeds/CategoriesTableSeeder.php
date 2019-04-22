@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Category
+use App\Category;
 
 class CategoriesTableSeeder extends Seeder
 {
@@ -13,6 +13,7 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         $category = new Category();
+        $category->id = 1;
         $category->name = "Quan";
         $category->slug = "quan";
         $category->desc = "";
@@ -20,14 +21,12 @@ class CategoriesTableSeeder extends Seeder
         $category->save();
 
         $category = new Category();
+        $category->id = 2;
         $category->name = "Ao";
         $category->slug = "ao";
         $category->desc = "";
         $category->image = "";
         $category->save();
-
-
-
 
     }
 }

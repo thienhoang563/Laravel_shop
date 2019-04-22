@@ -29,10 +29,14 @@ Route::prefix('admin')->group(function () {
         Route::get('/{id}/delete', 'UserController@destroy')->name('users.destroy');
         Route::get('/{id}/update', 'UserController@update')->name('users.update');
         Route::post('/{id}/update', 'UserController@edit')->name('users.edit');
-
-
-
-
+    });
+    Route::prefix('/categories')->group(function () {
+        Route::get('/', 'CategoryController@index')->name('categories.index');
+        Route::get('/create', 'CategoryController@create')->name('categories.create');
+        Route::post('/create', 'CategoryController@store')->name('categories.store');
+//        Route::get('/{id}/delete', 'UserController@destroy')->name('users.destroy');
+//        Route::get('/{id}/update', 'UserController@update')->name('users.update');
+//        Route::post('/{id}/update', 'UserController@edit')->name('users.edit');
     });
 });
 
