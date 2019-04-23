@@ -75,7 +75,11 @@ class UserController extends Controller
         $user->phone = $request->phone;
         $user->role = $request->role;
 
-        if ($request->hasFile('image')) {
+
+//        (!$request->hasFile('image')) {
+//            $user->image =
+//        } else
+           if ($request->hasFile('image')) {
             unlink(public_path(). '/storage/' . $user->image);
             $avatar = $request->image;
             $path = $avatar->store('avatar', 'public');
